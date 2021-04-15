@@ -26,25 +26,39 @@ public class BoardController {
 		log.info("==========insert() ");
 	}
 	
+	//등록(모델로 보내기)
 	@PostMapping("/board/register")
 	public String insertExe(BoardVo vo, RedirectAttributes rttr) {
-		log.info("=========="+vo);
+		log.info("========================================================="+vo);
 		int res = service.insertBoard(vo);
-		log.info("=========="+vo);
+		log.info("========================================================"+vo);
 		
 		rttr.addFlashAttribute("resMsg", vo.getBno()+"번 게시글이 등록 되었습니다.");
 		return "redirect:/board/list";
 	}
 	
-	
+	//리스트 
 	@GetMapping("/board/list")
 	public void getList(Model model) {
-		
-		
 		model.addAttribute("list",service.getList());
-		
 		log.info("getList()================");
 	}
+	//정보 확인
+	@GetMapping({"/board/get" , "/board/update"})
+	public void get(BoardVo vo, RedirectAttributes rttr) {
+		//상세정보 조회
+		vo=service.get(vo.getBno());
+		log.info("getList()================");
+	}
+	
+	@PostMapping("/board/update")
+	public String postUpdate(BoardVo vo, Model model) {
+		vo = service.get(vo.getBno());
+		model.addAttribute("vo",vo);
+		log.info(vo);
+		return "redirect:/board/get";
+	}
+	
 	
 	/*
 	 * @GetMapping("/board/titleboard") public void titleMapping(Model model) {

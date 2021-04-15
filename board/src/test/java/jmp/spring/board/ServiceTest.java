@@ -23,6 +23,35 @@ public class ServiceTest {
 	BoardMapper mapper;
 	
 	@Test
+	public void testUpdate() {
+		BoardVo vo = new BoardVo();
+		vo.setBno(24);
+		vo.setTitle("깨진거 수정되라");
+		vo.setContent("수정되라");
+		vo.setWriter("수정되라고");
+		int up= mapper.update(vo);
+		log.info(up);
+	}
+	
+	
+	@Test
+	public void testDelete() {
+		log.info("Delete Count : "+mapper.delete(1));
+	}
+	
+	@Test
+	public void getService() {
+		BoardVo vo = service.get(41);
+		log.info(vo);
+	}
+	
+	@Test
+	public void get() {
+		BoardVo vo = mapper.get(41);
+		log.info(vo);
+	}
+	
+	@Test
 	public void mapper() {
 		BoardVo vo = new BoardVo();
 		vo.setContent("내용-mapperTest");
